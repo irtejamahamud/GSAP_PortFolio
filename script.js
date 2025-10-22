@@ -63,12 +63,40 @@ function initApp() {
     );
 
   // About fade-ins
-  gsap.from("#aboutCard", {
-    scrollTrigger: { trigger: "#about", start: "top 80%" },
-    y: 30,
-    autoAlpha: 0,
-    duration: 0.7,
-    stagger: 0.12,
+  // ===== ABOUT SECTION ANIMATION =====
+  gsap.from(".about-img img", {
+    scrollTrigger: {
+      trigger: ".about-section",
+      start: "top 80%",
+    },
+    opacity: 0,
+    x: -100,
+    duration: 1.2,
+    ease: "power3.out",
+  });
+
+  gsap.from(".about-text", {
+    scrollTrigger: {
+      trigger: ".about-section",
+      start: "top 80%",
+    },
+    opacity: 0,
+    x: 100,
+    duration: 1.2,
+    delay: 0.3,
+    ease: "power3.out",
+  });
+
+  gsap.from(".stat-card", {
+    scrollTrigger: {
+      trigger: ".about-stats",
+      start: "top 85%",
+    },
+    opacity: 0,
+    y: 50,
+    stagger: 0.2,
+    duration: 1,
+    ease: "back.out(1.7)",
   });
 
   // Projects reveal
