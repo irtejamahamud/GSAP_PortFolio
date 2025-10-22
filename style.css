@@ -330,7 +330,8 @@ footer {
 
 /* ===== ABOUT SECTION ===== */
 .about-section {
-  background: linear-gradient(135deg, var(--rich-black), var(--prussian-blue));
+  /* Use same vertical gradient as the hero/body for visual continuity */
+  background: linear-gradient(180deg, var(--rich-black) 0%, #07101a 100%);
   padding: 120px 8%;
   color: #fff;
   position: relative;
@@ -367,6 +368,10 @@ footer {
 .about-text {
   flex: 1.2;
   animation: fadeInUp 1s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 18px; /* space between heading, paragraph, stats and the CTA */
+  align-items: flex-start; /* keep text and CTA left-aligned */
 }
 
 .about-text h2 {
@@ -427,6 +432,8 @@ footer {
   text-decoration: none;
   font-weight: bold;
   transition: background 0.3s ease, transform 0.3s ease;
+  align-self: flex-start; /* ensure the CTA sits under the text, left-aligned */
+  margin-top: 20px;
 }
 
 .about-text .btn:hover {
