@@ -146,37 +146,65 @@ function initApp() {
     });
   });
 
-  // Horizontal skills scrolling using ScrollTrigger
-  const track = document.getElementById("skillsTrack");
-  const totalWidth = track.scrollWidth;
-  gsap.to(track, {
-    x: () =>
-      -(totalWidth - document.querySelector(".container").clientWidth + 40),
-    ease: "none",
-    scrollTrigger: {
-      trigger: "#skills",
-      start: "top top",
-      end: () => `+=${totalWidth}`,
-      scrub: 0.7,
-      pin: true,
-      anticipatePin: 1,
-    },
-  });
-
-  // Each skill animate on enter
-  gsap.utils.toArray(".skill").forEach((el, i) => {
-    gsap.from(el, {
-      autoAlpha: 0,
-      y: 20,
-      duration: 0.6,
-      delay: i * 0.06,
+  // Projects horizontal pinned scroll
+  const projectsGrid = document.querySelector(".projects-grid");
+  if (projectsGrid) {
+    const projectsWidth = projectsGrid.scrollWidth;
+    gsap.to(projectsGrid, {
+      x: () => -(projectsWidth - document.documentElement.clientWidth + 40),
+      ease: "none",
       scrollTrigger: {
-        trigger: el,
-        start: "left+=50 center",
-        horizontal: true,
+        trigger: "#projects",
+        start: "top top",
+        end: () => "+=" + (projectsWidth - window.innerWidth),
+        scrub: 1.2,
+        pin: true,
+        anticipatePin: 1,
       },
     });
-  });
+
+    // Keep per-project reveal (if desired) — they will animate within the pinned area
+    const projectCards = gsap.utils.toArray(".project");
+    gsap.from(projectCards, {
+      opacity: 0,
+      y: 40,
+      stagger: 0.12,
+      duration: 0.9,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: "#projects",
+        start: "top 85%",
+      },
+    });
+  }
+
+  // Skill hover interactions using GSAP (color glow + scale)
+  const skillCardsHover = gsap.utils.toArray(".skill-card");
+  if (skillCardsHover.length) {
+    skillCardsHover.forEach((card) => {
+      const icon = card.querySelector("i");
+      // capture original computed styles so we can revert exactly
+      const originalIconColor = getComputedStyle(icon).color;
+      const originalBoxShadow = getComputedStyle(card).boxShadow || "none";
+
+      // mouseenter: color icon and add glow/scale
+      card.addEventListener("mouseenter", () => {
+        gsap.to(icon, { color: "#cfe8ff", duration: 0.28, ease: "power1.out" });
+        gsap.to(card, {
+          scale: 1.06,
+          boxShadow: "0 20px 40px rgba(207,232,255,0.12)",
+          duration: 0.35,
+          ease: "power1.out",
+        });
+      });
+
+      // mouseleave: revert to captured original values
+      card.addEventListener("mouseleave", () => {
+        gsap.to(icon, { color: originalIconColor, duration: 0.28, ease: "power1.out" });
+        gsap.to(card, { scale: 1, boxShadow: originalBoxShadow, duration: 0.35, ease: "power1.out" });
+      });
+    });
+  }
 
   // Lenis smooth scroll
   const lenis = new Lenis({

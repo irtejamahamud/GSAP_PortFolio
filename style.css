@@ -248,9 +248,12 @@ p.lead {
 
 /* Projects */
 .projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  /* Horizontal scroll layout for projects (GSAP will pin and translate this row) */
+  display: flex;
   gap: 24px;
+  padding: 24px 10%;
+  width: max-content;
+  align-items: stretch;
 }
 .project {
   position: relative;
@@ -267,6 +270,42 @@ p.lead {
 .project:hover {
   transform: translateY(-6px);
   transition: transform 0.28s;
+}
+
+.project-thumb {
+  display: block;
+  width: 100%;
+  height: 160px; /* fixed height so object-fit works consistently */
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  background-color: #0d1321; /* fallback background */
+}
+
+/* Dark overlay to ensure text is readable on top of images */
+.project::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 160px; /* match thumb height */
+  background: linear-gradient(180deg, rgba(13,19,33,0.45), rgba(13,19,33,0.12));
+  pointer-events: none;
+}
+
+.project h3 {
+  margin-top: 10px;
+  color: var(--eggshell);
+}
+
+.project p {
+  color: #cfd9e6;
+}
+
+.techs .chip {
+  background: rgba(255,255,255,0.03);
+  color: #dfe9f6;
 }
 .techs {
   display: flex;
@@ -450,5 +489,99 @@ footer {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ===== SKILLS SECTION ===== */
+.skills-section {
+  background: linear-gradient(135deg, var(--prussian-blue), var(--rich-black));
+  padding: 120px 0;
+  color: var(--eggshell);
+  position: relative;
+  overflow: hidden;
+}
+
+.skills-heading {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.skills-heading h2 {
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+}
+
+.skills-heading h2 span {
+  color: var(--silver-lake-blue);
+}
+
+.skills-heading p {
+  color: #cfd9e6;
+  font-size: 1.1rem;
+}
+
+.skills-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.skills-container {
+  display: flex;
+  gap: 30px;
+  padding: 40px 10%;
+  width: 100%;
+  flex-wrap: wrap; /* allow cards to wrap instead of forcing horizontal-only */
+  justify-content: center;
+}
+
+.skill-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s ease, background 0.4s ease;
+  cursor: pointer;
+}
+
+.skill-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.skill-card i {
+  font-size: 2.8rem;
+  color: var(--silver-lake-blue);
+  margin-bottom: 10px;
+}
+
+.skill-card p {
+  font-size: 1rem;
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .skills-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  /* On small screens, fall back to a vertical stacked layout for projects */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    padding: 0;
   }
 }

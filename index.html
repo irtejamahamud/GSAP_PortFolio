@@ -13,7 +13,7 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
   <!-- Font Awesome (for icons) -->
-  <script src="https://kit.fontawesome.com/your_kit_id.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
   <link rel="stylesheet" href="style.css" />
   <!-- GSAP + plugins -->
@@ -102,46 +102,25 @@
       </div>
     </section>
 
-    <!-- SKILLS (Horizontal) -->
-    <section class="section skills-wrap" id="skills">
-      <div class="container">
-        <h2>Skills</h2>
-        <div class="card" style="overflow:hidden">
-          <div class="skills-track" id="skillsTrack">
-            <!-- Repeat skill cards -->
-            <div class="skill">
-              <h4>HTML &amp; CSS</h4>
-              <p>Semantic markup, responsive layouts, accessibility.</p>
-            </div>
-            <div class="skill">
-              <h4>JavaScript (ES6+)</h4>
-              <p>Modern JS, async patterns, DOM mastery.</p>
-            </div>
-            <div class="skill">
-              <h4>React &amp; Next.js</h4>
-              <p>SSR, hydration patterns, hooks &amp; patterns.</p>
-            </div>
-            <div class="skill">
-              <h4>Node.js &amp; APIs</h4>
-              <p>REST, GraphQL, WebSockets, microservices.</p>
-            </div>
-            <div class="skill">
-              <h4>Python &amp; ML</h4>
-              <p>Data processing, model prototyping, ETL.</p>
-            </div>
-            <div class="skill">
-              <h4>TensorFlow &amp; PyTorch</h4>
-              <p>Model training and inference pipelines.</p>
-            </div>
-            <div class="skill">
-              <h4>Embeddings &amp; NLP</h4>
-              <p>Semantic search, topic modeling, agents.</p>
-            </div>
-            <div class="skill">
-              <h4>DevOps</h4>
-              <p>Docker, CI/CD, monitoring &amp; deployment.</p>
-            </div>
-          </div>
+    <!-- ===== SKILLS SECTION ===== -->
+    <section id="skills" class="skills-section">
+      <div class="skills-heading">
+        <h2>My <span>Skills</span></h2>
+        <p>Technologies I use to design, build, and power intelligent applications.</p>
+      </div>
+
+      <div class="skills-wrapper">
+        <div class="skills-container">
+          <div class="skill-card"><i class="fab fa-html5"></i><p>HTML5</p></div>
+          <div class="skill-card"><i class="fab fa-css3-alt"></i><p>CSS3</p></div>
+          <div class="skill-card"><i class="fab fa-js"></i><p>JavaScript</p></div>
+          <div class="skill-card"><i class="fab fa-react"></i><p>React</p></div>
+          <div class="skill-card"><i class="fab fa-node"></i><p>Node.js</p></div>
+          <div class="skill-card"><i class="fab fa-python"></i><p>Python</p></div>
+          <div class="skill-card"><i class="fas fa-brain"></i><p>TensorFlow</p></div>
+          <div class="skill-card"><i class="fas fa-database"></i><p>MongoDB</p></div>
+          <div class="skill-card"><i class="fab fa-git-alt"></i><p>Git</p></div>
+          <div class="skill-card"><i class="fab fa-docker"></i><p>Docker</p></div>
         </div>
       </div>
     </section>
@@ -152,16 +131,19 @@
         <h2>Projects</h2>
         <div class="projects-grid" id="projectsGrid">
           <div class="project card">
+            <img src="assets/project.png" alt="NG Job Recommender" class="project-thumb" />
             <h3>NG Job Recommender</h3>
             <p>A job recommendation system using NLP to match resumes with job descriptions and personalized recommendations.</p>
             <div class="techs"><span class="chip">Python</span><span class="chip">NLP</span><span class="chip">React</span></div>
           </div>
           <div class="project card">
+            <img src="assets/profile.png" alt="Streamlit Video Downloader" class="project-thumb" />
             <h3>Streamlit Video Downloader</h3>
             <p>A Streamlit UI around yt-dlp supporting in-browser previews and multiple qualities.</p>
             <div class="techs"><span class="chip">Python</span><span class="chip">Streamlit</span><span class="chip">yt-dlp</span></div>
           </div>
           <div class="project card">
+            <img src="assets/profile.png" alt="Interactive Portfolio" class="project-thumb" />
             <h3>Interactive Portfolio (this site)</h3>
             <p>Modern, animated portfolio using GSAP, Lenis for smooth scroll, and EmailJS contact integration.</p>
             <div class="techs"><span class="chip">HTML</span><span class="chip">GSAP</span><span class="chip">Lenis</span></div>
