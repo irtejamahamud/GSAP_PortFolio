@@ -206,6 +206,68 @@ function initApp() {
     });
   }
 
+  // ===== Skills marquee auto-slide (continuous rows) =====
+  let marqueeTweens = [];
+  function initSkillMarquees() {
+    // kill previous tweens
+    marqueeTweens.forEach((t) => t.kill && t.kill());
+    marqueeTweens = [];
+
+    const rows = gsap.utils.toArray('.skills-row');
+    rows.forEach((row, idx) => {
+      const track = row.querySelector('.skills-track');
+      if (!track) return;
+
+      // duplicate content so the marquee is seamless
+      track.innerHTML = track.innerHTML + track.innerHTML;
+      const distance = track.scrollWidth / 2; // distance to travel for a seamless loop
+      const speed = 80; // pixels per second
+      const duration = Math.max(8, distance / speed);
+
+      // row 0 (first) should go right-to-left, row1 left-to-right, row2 right-to-left
+      const direction = (idx % 2 === 0) ? -1 : 1;
+
+      if (direction === -1) {
+        // animate from 0 -> -distance
+        const tw = gsap.to(track, {
+          x: () => -distance,
+          ease: 'none',
+          duration: duration,
+          repeat: -1,
+        });
+        marqueeTweens.push(tw);
+      } else {
+        // for rightwards movement, start offset at -distance and animate to 0
+        gsap.set(track, { x: -distance });
+        const tw = gsap.to(track, {
+          x: 0,
+          ease: 'none',
+          duration: duration,
+          repeat: -1,
+        });
+        marqueeTweens.push(tw);
+      }
+    });
+  }
+
+  // initialize marquees and re-init on resize
+  initSkillMarquees();
+  let marqueeResizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(marqueeResizeTimer);
+    marqueeResizeTimer = setTimeout(() => {
+      // restore original single set of items then re-init (avoid exponential duplication)
+      gsap.utils.toArray('.skills-track').forEach((t) => {
+        const children = Array.from(t.children);
+        const half = Math.ceil(children.length / 2);
+        // keep only first half
+        const firstHalf = children.slice(0, half).map((c) => c.outerHTML).join('');
+        t.innerHTML = firstHalf;
+      });
+      initSkillMarquees();
+    }, 150);
+  });
+
   // Lenis smooth scroll
   const lenis = new Lenis({
     duration: 1.1,

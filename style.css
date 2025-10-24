@@ -525,13 +525,17 @@ footer {
   position: relative;
 }
 
-.skills-container {
+.skills-row {
+  overflow: hidden;
+  padding: 12px 0;
+}
+
+.skills-track {
   display: flex;
-  gap: 30px;
-  padding: 40px 10%;
-  width: 100%;
-  flex-wrap: wrap; /* allow cards to wrap instead of forcing horizontal-only */
-  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  padding: 10px 10%;
+  width: max-content;
 }
 
 .skill-card {
