@@ -28,6 +28,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  cursor: none; /* hide the default system cursor to use custom cursor elements */
+}
+
+/* Restore cursor for interactive controls so users can still click and type */
+button, a, input, textarea, select, .btn {
+  cursor: pointer !important;
+}
+
+input, textarea, select {
+  cursor: text !important;
 }
 
 /* Loading overlay */
