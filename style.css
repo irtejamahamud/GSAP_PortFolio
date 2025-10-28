@@ -780,6 +780,58 @@ footer {
   }
 }
 
+
+/* ===== COLLABORATION SECTION ===== */
+.collab-section {
+  padding: 100px 24px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(13,19,33,0.02), transparent);
+}
+.collab-container {
+  max-width: var(--fw);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  /* tighten vertical spacing so the marquee lines sit closer to the quote */
+  gap: 12px;
+  align-items: center;
+  position: relative;
+}
+.collab-ui {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  font-weight: 700;
+  opacity: 0.28;
+  color: var(--eggshell);
+  /* slightly smaller so these lines don't overpower the centered quote */
+  font-size: clamp(18px, 4.5vw, 48px);
+  line-height: 1;
+  will-change: transform;
+}
+.collab-ui.ui-left { text-align: left; align-self: flex-start; }
+.collab-ui.ui-right { text-align: right; align-self: flex-end; }
+.collab-quote {
+  font-size: clamp(28px, 4.2vw, 44px);
+  /* small vertical margin so the side texts sit a bit closer */
+  margin: 6px 0;
+  color: var(--eggshell);
+  text-align: center;
+}
+.text-strong {
+  background: linear-gradient(90deg, #ffffff 0%, #ffffff 50%, #8b31ff 51%, #7000ff 102%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+@media (max-width: 900px) {
+  .collab-ui { font-size: clamp(20px, 6.5vw, 44px); opacity: 0.22; }
+  .collab-quote { font-size: clamp(20px, 5.5vw, 32px); }
+}
 @media (max-width: 900px) {
   /* On small screens, fall back to a vertical stacked layout for projects */
   .projects-grid {

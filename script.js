@@ -398,6 +398,52 @@ function initApp() {
   document.getElementById("viewWork").addEventListener("click", () => {
     gsap.to(window, { duration: 1, scrollTo: "#projects" });
   });
+  
+  // ===== Collaboration section animations (converted from React component) =====
+  (function initCollab() {
+    const collab = document.getElementById('collaboration');
+    if (!collab) return;
+
+    const quoteEl = collab.querySelector('.collab-quote');
+    const textStrong = collab.querySelector('.text-strong');
+
+    const smallScreen = document.body.clientWidth < 767;
+
+    const quoteTl = gsap.timeline({ defaults: { ease: 'none' } });
+    if (quoteEl) {
+      quoteTl.from(quoteEl, { opacity: 0, duration: 1.6 })
+        .to(textStrong, { backgroundPositionX: '100%', duration: 1 });
+
+      ScrollTrigger.create({
+        trigger: collab,
+        start: 'center bottom',
+        end: 'center center',
+        scrub: 1,
+        animation: quoteTl,
+      });
+    }
+
+    const slidingTl = gsap.timeline({ defaults: { ease: 'none' } });
+    const leftEl = collab.querySelector('.ui-left');
+    const rightEl = collab.querySelector('.ui-right');
+
+    if (leftEl) {
+      slidingTl.to(leftEl, { xPercent: smallScreen ? -500 : -150, duration: 1 }, 0);
+    }
+    if (rightEl) {
+      // move right element from the right into view as the left moves left
+      // we use a from for the right so it appears to slide in opposite direction
+      slidingTl.from(rightEl, { xPercent: smallScreen ? 500 : 150, duration: 1 }, 0);
+    }
+
+    ScrollTrigger.create({
+      trigger: collab,
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 1,
+      animation: slidingTl,
+    });
+  })();
   document.getElementById("hireBtn").addEventListener("click", () => {
     gsap.to(window, { duration: 1, scrollTo: "#contact" });
   });
