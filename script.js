@@ -399,7 +399,7 @@ function initApp() {
     gsap.to(window, { duration: 1, scrollTo: "#projects" });
   });
   
-  // ===== Collaboration section animations (converted from React component) =====
+  // ===== Collaboration section animations (refined) =====
   (function initCollab() {
     const collab = document.getElementById('collaboration');
     if (!collab) return;
@@ -407,18 +407,19 @@ function initApp() {
     const quoteEl = collab.querySelector('.collab-quote');
     const textStrong = collab.querySelector('.text-strong');
 
-    const smallScreen = document.body.clientWidth < 767;
+    const smallScreen = document.body.clientWidth < 900;
 
     const quoteTl = gsap.timeline({ defaults: { ease: 'none' } });
     if (quoteEl) {
-      quoteTl.from(quoteEl, { opacity: 0, duration: 1.6 })
-        .to(textStrong, { backgroundPositionX: '100%', duration: 1 });
+      quoteTl
+        .from(quoteEl, { autoAlpha: 0, y: 20, duration: 0.9, ease: 'power2.out' })
+        .to(textStrong, { backgroundPositionX: '100%', duration: 1, ease: 'power1.out' });
 
       ScrollTrigger.create({
         trigger: collab,
-        start: 'center bottom',
-        end: 'center center',
-        scrub: 1,
+        start: 'top 85%',
+        end: 'top 45%',
+        scrub: 0.6,
         animation: quoteTl,
       });
     }
@@ -428,19 +429,18 @@ function initApp() {
     const rightEl = collab.querySelector('.ui-right');
 
     if (leftEl) {
-      slidingTl.to(leftEl, { xPercent: smallScreen ? -500 : -150, duration: 1 }, 0);
+      slidingTl.to(leftEl, { xPercent: smallScreen ? -120 : -90, duration: 1 }, 0);
     }
     if (rightEl) {
-      // move right element from the right into view as the left moves left
-      // we use a from for the right so it appears to slide in opposite direction
-      slidingTl.from(rightEl, { xPercent: smallScreen ? 500 : 150, duration: 1 }, 0);
+      // Opposite direction for a gentle counter-move
+      slidingTl.from(rightEl, { xPercent: smallScreen ? 120 : 90, duration: 1 }, 0);
     }
 
     ScrollTrigger.create({
       trigger: collab,
       start: 'top bottom',
       end: 'bottom top',
-      scrub: 1,
+      scrub: 0.6,
       animation: slidingTl,
     });
   })();
