@@ -99,13 +99,128 @@ function initApp() {
     ease: "back.out(1.7)",
   });
 
-  // Projects reveal
-  gsap.from("#projectsGrid .project", {
-    scrollTrigger: { trigger: "#projects", start: "top 85%" },
-    y: 40,
-    autoAlpha: 0,
-    duration: 0.7,
-    stagger: 0.12,
+  // Projects reveal with interesting animations
+  const projectCards = gsap.utils.toArray(".project");
+  
+  projectCards.forEach((card, index) => {
+    // Set initial state
+    gsap.set(card, { 
+      y: 60, 
+      autoAlpha: 0,
+      scale: 0.95,
+      rotationY: index % 2 === 0 ? -5 : 5
+    });
+    
+    // Animate in
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: card,
+        start: "top 85%",
+        toggleActions: "play none none none"
+      }
+    });
+    
+    tl.to(card, {
+      y: 0,
+      autoAlpha: 1,
+      scale: 1,
+      rotationY: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      delay: index * 0.1
+    });
+  });
+  
+  // Hover animations for project cards
+  projectCards.forEach((card) => {
+    const cardContent = card.querySelector('.project-content');
+    const links = card.querySelectorAll('.project-link');
+    
+    // Magnetic effect on cards
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const moveX = (x - centerX) * 0.1;
+      const moveY = (y - centerY) * 0.1;
+      
+      gsap.to(cardContent, {
+        x: moveX,
+        y: moveY,
+        duration: 0.3,
+        ease: "power1.out"
+      });
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      gsap.to(cardContent, {
+        x: 0,
+        y: 0,
+        duration: 0.5,
+        ease: "elastic.out(1, 0.3)"
+      });
+    });
+    
+    // Animate links on hover
+    links.forEach((link, index) => {
+      link.addEventListener('mouseenter', () => {
+        gsap.to(link, {
+          scale: 1.15,
+          rotation: Math.random() * 10 - 5,
+          y: -5,
+          duration: 0.3,
+          ease: "back.out(1.7)"
+        });
+      });
+      
+      link.addEventListener('mouseleave', () => {
+        gsap.to(link, {
+          scale: 1,
+          rotation: 0,
+          y: 0,
+          duration: 0.4,
+          ease: "elastic.out(1, 0.5)"
+        });
+      });
+    });
+  });
+  
+  // Animate project badge on featured cards
+  const featuredBadge = document.querySelector('.project.featured .project-badge');
+  if (featuredBadge) {
+    gsap.to(featuredBadge, {
+      scrollTrigger: {
+        trigger: ".project.featured",
+        start: "top 85%",
+        toggleActions: "play none none none"
+      },
+      opacity: 1,
+      scale: 1,
+      rotation: 360,
+      duration: 0.8,
+      ease: "elastic.out(1, 0.8)"
+    });
+  }
+  
+  // Chip stagger animation
+  gsap.utils.toArray('.chip').forEach((chip, index) => {
+    gsap.from(chip, {
+      scrollTrigger: {
+        trigger: chip.closest('.project'),
+        start: "top 85%",
+        toggleActions: "play none none none"
+      },
+      opacity: 0,
+      scale: 0,
+      x: -20,
+      duration: 0.4,
+      ease: "back.out(1.7)",
+      delay: 0.4 + (index * 0.05)
+    });
   });
 
   // Contact form animate
@@ -146,35 +261,35 @@ function initApp() {
     });
   });
 
-  // Projects horizontal pinned scroll
-  const projectsGrid = document.querySelector(".projects-grid");
-  if (projectsGrid) {
-    const projectsWidth = projectsGrid.scrollWidth;
-    gsap.to(projectsGrid, {
-      x: () => -(projectsWidth - document.documentElement.clientWidth + 40),
-      ease: "none",
-      scrollTrigger: {
-        trigger: "#projects",
-        start: "top top",
-        end: () => "+=" + (projectsWidth - window.innerWidth),
-        scrub: 1.2,
-        pin: true,
-        anticipatePin: 1,
-      },
-    });
-
-    // Keep per-project reveal (if desired) — they will animate within the pinned area
-    const projectCards = gsap.utils.toArray(".project");
-    gsap.from(projectCards, {
-      opacity: 0,
-      y: 40,
-      stagger: 0.12,
-      duration: 0.9,
-      ease: "power3.out",
+  // Animate projects header
+  const projectsHeader = document.querySelector('.projects-header');
+  if (projectsHeader) {
+    gsap.from(projectsHeader, {
       scrollTrigger: {
         trigger: "#projects",
         start: "top 85%",
+        toggleActions: "play none none none"
       },
+      y: 30,
+      autoAlpha: 0,
+      duration: 0.8,
+      ease: "power3.out"
+    });
+  }
+  
+  // Animate projects footer
+  const projectsFooter = document.querySelector('.projects-footer');
+  if (projectsFooter) {
+    gsap.from(projectsFooter, {
+      scrollTrigger: {
+        trigger: "#projects",
+        start: "top 60%",
+        toggleActions: "play none none none"
+      },
+      y: 20,
+      autoAlpha: 0,
+      duration: 0.8,
+      ease: "power2.out"
     });
   }
 
